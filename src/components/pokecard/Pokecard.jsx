@@ -1,31 +1,33 @@
 import { useEffect } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import "./pokecard.scss";
 
 const Pokecard = (props) => {
   const { pokedata, searchfield } = props;
   const [filteredpoke, setfilteredpoke] = useState([]);
-  const PokeSetter = () => {
-    const data = pokedata.filter((pokeinfo) => {
-      return pokeinfo.name.toLocaleLowerCase().includes(searchfield);
-    });
+  const runcall = useCallback(() => {
+    const PokeSetter = () => {
+      setfilteredpoke([]);
+      const data = pokedata.filter((pokeinfo) => {
+        return pokeinfo.name.toLocaleLowerCase().includes(searchfield);
+      });
 
-    const half = Math.ceil(data.length / 2);
-    const left = data.slice(0, half);
+      const half = Math.ceil(data.length / 2);
+      const left = data.slice(0, half);
 
-    setfilteredpoke(left);
-  };
-  useEffect(() => {
-    setfilteredpoke([]);
-    // console.log(filteredpoke);
-
+      setfilteredpoke(left);
+    };
     PokeSetter();
-  }, [searchfield]);
+  }, [pokedata, searchfield]);
+
+  useEffect(() => {
+    runcall();
+  }, [runcall]);
   return (
     <>
       <div className="pokecard-container">
         {filteredpoke.map((poke) => {
-          // console.log(poke);
           return (
             <>
               <div className="pokecard">
