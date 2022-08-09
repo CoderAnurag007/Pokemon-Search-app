@@ -5,21 +5,23 @@ import Search from "./pokesearch/Search";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useCallback } from "react";
 const Main = () => {
   const [pokedata, setpokedata] = useState([]);
-  useEffect(() => {
-    Pokegetter();
-  }, []);
+
   const urlvalue = "https://pokeapi.co/api/v2/pokemon/?limit=151";
-  const [url, seturl] = useState(urlvalue);
+  const url = urlvalue;
+  const gettercall = useCallback(() => {
+    const Pokegetter = async () => {
+      const res = await axios.get(url);
+      // setpokedata(res.data.results);
+      getpokemon(res.data.results);
 
-  const Pokegetter = async () => {
-    const res = await axios.get(url);
-    // setpokedata(res.data.results);
-    getpokemon(res.data.results);
+      console.log(res.data);
+    };
+    Pokegetter();
+  }, [url]);
 
-    console.log(res.data);
-  };
   const getpokemon = (res) => {
     res.map(async (item) => {
       const result = await axios.get(item.url);
@@ -38,6 +40,10 @@ const Main = () => {
     console.log(searchvalue);
     setsearchfield(searchvalue);
   };
+
+  useEffect(() => {
+    gettercall();
+  }, [gettercall]);
   return (
     <>
       <Navbar />
