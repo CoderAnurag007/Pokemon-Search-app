@@ -1,0 +1,31 @@
+.pokecard-container{
+    width: 90%;
+    margin: auto;
+    background-color: rgb(1, 0, 5);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    padding: 20px;
+
+    .pokecard{
+        width: 200px;
+        height: 200px;
+        border: 2px solid rgb(255, 255, 255);
+        background:linear-gradient(90deg ,rgb(208, 254, 208) ,rgb(4, 255, 4));
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        h3{
+            font-size: large;
+        }
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    }
+}
